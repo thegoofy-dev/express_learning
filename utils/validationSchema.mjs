@@ -18,6 +18,11 @@ export const createUserValidationSchema = {
         notEmpty: {
             errorMessage: "displayName must not be empty!"
         }
+    },
+    password : {
+        notEmpty: {
+            errorMessage: "Password should not be empty!"
+        }
     }
 }
 

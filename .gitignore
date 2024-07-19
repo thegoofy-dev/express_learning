@@ -1,8 +1,2 @@
 node_modules/
 .env
-# node --watch --env-file=.env test.js
-# // import mongoose from 'mongoose';
-
-# // mongoose.connect('mongodb://localhost:27017/express_tutorial')
-# //     .then(() => console.log('MongoDB connected to Database'))
-# //     .catch((err) => console.log(`Error : ${err}`));

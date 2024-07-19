@@ -2,10 +2,13 @@ import express from 'express'; // || const express = require('express');
 import mainRouter from "./routes/index.mjs"
 import "./strategies/local-strategy.mjs"
 import session from 'express-session';
-
+import mongoose from 'mongoose';
 
 const app = express();
 
+mongoose.connect('mongodb://localhost:27017/express_tutorial')
+    .then(() => console.log('MongoDB connected to Database'))
+    .catch((err) => console.log(`Error : ${err}`));
 
 const PORT = process.env.PORT || 3000;
 
