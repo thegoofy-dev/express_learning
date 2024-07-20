@@ -1,14 +1,14 @@
 import { Router } from "express";  
-import { animeCharac } from "../utils/constants.mjs";
 import session from 'express-session';
+import { User } from "../mongoose/schemas/user.mjs";
 
 const router = Router();
 
 // Session middleware configuration
 router.use(session({
     secret: 'goofy amigo',
-    saveUninitialized : false,
-    resave : false,
+    saveUninitialized: false,
+    resave: false,
     cookie: {
         maxAge: 60000 * 60,
     }
@@ -16,23 +16,28 @@ router.use(session({
 
 // GET METHOD -> '/'
 router.get("/", (req, res) => {
-    console.log("Session : ",req.session);
-    console.log("Session Id : ",req.session.id);  // ||   console.log(req.sessionID);
-    res.cookie('JS', 'express', {maxAge:6000 * 60, httpOnly: true} )
+    console.log("Session : ", req.session);
+    console.log("Session Id : ", req.session.id);
+    res.cookie('JS', 'express', { maxAge: 6000 * 60, httpOnly: true });
     req.session.visited = true;
-    res.status(200).send({msg : "HOLA AMIGOOO!!!!!"});
-})
+    res.status(200).send({ msg: "HOLA AMIGOOO!!!!!" });
+});
 
 // POST Method -> '/api/auth'
-router.post('/api/auth', (req, res) => {
+router.post('/api/auth',async (req, res) => {
     const { body : {username, password} } = req;
     
-    const findUser = animeCharac.find((user) => user.username === username);
-    if (!findUser || findUser.password !== password) 
-        return res.status(401).send({msg : "BAD CREDENTIALS"});
+        try {
+            const findUser = await User.findOne({ username });
+            if (!findUser || findUser.password !== password) 
+                return res.status(401).send({ msg: "BAD CREDENTIALS" });
 
-    req.session.user = findUser;
-    return res.status(200).send(findUser);
+            req.session.user = findUser;
+            return res.status(200).send(findUser);
+        } catch (err) {
+            console.log(err);
+            return res.status(500).send({ message: 'Internal Server Error' });
+        }
     }
 );
 
@@ -47,9 +52,9 @@ router.get("/api/auth/status", (req, res) => {
     });
     
     return req.session.user 
-    ? res.status(200).send(req.session.user) 
-    : res.status(401).send({msg : "Not Authenticated"});
-    }
+        ? res.status(200).send(req.session.user) 
+        : res.status(401).send({msg : "Not Authenticated"});
+        }
 );
 
 // POST Method -> '/api/cart'

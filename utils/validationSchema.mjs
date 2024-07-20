@@ -31,11 +31,7 @@ export const idValidationSchema = {
         in: ['params'],
         notEmpty: {
             errorMessage: 'Must not be Empty!',
-        },
-        isInt: {
-            errorMessage: 'ID must be an integer',
-        },
-        toInt: true,
+        }
     }
 };
 

@@ -1,5 +1,4 @@
-import { animeCharac } from "./constants.mjs"; 
-import { validationResult } from "express-validator";
+import { User } from "../mongoose/schemas/user.mjs";
 
 // MIDDLEWARE
 export const loggingMiddleware = (req, res, next) => {
@@ -8,25 +7,28 @@ export const loggingMiddleware = (req, res, next) => {
 }
 
 // MIDDLEWARE FOR USER's INDEX AND ID
-export const resolveIndexByUserId = (req, res, next) => {
-    const { params: {id} } = req;
+export const resolveIndexByUserId = async (req, res, next) => {
+    const { params: { id } } = req;
 
-    const ID = parseInt(id);
-    // console.log(ID);
-    
-    // Check if ID is number or not
-    if(isNaN(ID)) return res.status(400).send(`Please provide a valid ID!`);
-    
-    // Find the user index 
-    const findUserIndex = animeCharac.findIndex((user) => user.id === ID);
-    // console.log(`Index of id=${id} : ${findUserIndex}`);
-    
-    // Check if the findUserIndex is a valid or not
-    if(findUserIndex === -1)
-        return res.status(404).send({msg : "User Not Found!"});
+    // Validate if the ID is a valid ObjectId
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(400).send({ message: 'Invalid ID format' });
+    }
 
-    req.findUserIndex = findUserIndex;
-    next();
-}
+    try {
+        // Find the user by ID
+        const user = await User.findById(id);
+        if (!user) {
+            return res.status(404).send({ message: 'User Not Found' });
+        }
+
+        // Attach the user object to the request object
+        req.user = user;
+        next();
+    } catch (err) {
+        console.error(err);
+        return res.status(500).send({ message: 'Internal Server Error' });
+    }
+};
 
 
