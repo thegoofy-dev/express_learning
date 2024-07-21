@@ -1,1 +1,7 @@
 Understand PassportJs and Authentication -> https://medium.com/@prashantramnyc/node-js-with-passport-authentication-simplified-76ca65ee91e5
+
+Understand Session and Cookies -> https://dev.to/m__mdy__m/understanding-cookies-and-sessions-in-nodejs-3449
+
+Understand Session-Store -> https://meghagarwal.medium.com/storing-sessions-with-connect-mongo-in-mongodb-64d74e3bbd9c
+
+Understand bcryptjs -> https://dev.to/mr_walkr/password-hashing-in-nodejs-using-bcryptjs-library-3j56
