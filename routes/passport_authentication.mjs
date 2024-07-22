@@ -10,6 +10,7 @@ router.get('/api/auth/status', (req, res) => {
     console.log(`Inside /auth/status endpoint`);
     console.log(req.user);
     console.log(req.session);
+    console.log(req.sessionID);
     return req.user ? res.send(req.user) : res.sendStatus(401);
 });
 
