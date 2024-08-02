@@ -5,6 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "start1":"node --watch --env-file=.env test.js",
     "start": "node  server.js ",
     "dev": "node --watch --env-file=.env server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -22,6 +23,7 @@
     "mongoose": "^8.4.4",
     "nodemon": "^3.1.4",
     "passport": "^0.7.0",
+    "passport-discord": "^0.1.4",
     "passport-local": "^1.0.0"
   }
 }

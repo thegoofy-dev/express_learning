@@ -1,9 +1,10 @@
-import express from 'express'; // || const express = require('express');
+import express, { request } from 'express'; // || const express = require('express');
 import mainRouter from "./routes/index.mjs"
-import "./strategies/local-strategy.mjs"
 import session from 'express-session';
 import mongoose from 'mongoose';
 import MongoStore from 'connect-mongo';
+// import "./strategies/local-strategy.mjs"
+import "./strategies/discord-strategy.mjs"
 
 const app = express();
 
@@ -19,7 +20,7 @@ app.use(express.json());
 // Session middleware configuration
 app.use(session({
     secret: 'goofy amigo',
-    saveUninitialized : true,
+    saveUninitialized : false,
     resave : false,
     cookie: {
         maxAge: 60000 * 60,
@@ -32,7 +33,6 @@ app.use(session({
 // MOUNT means attaching something
 // Mount routes to handle routes starting from the root level of app.
 app.use(mainRouter);
-
 
 app.listen(PORT, () => {
     console.log(`Server is listening on ${PORT}`)

@@ -3,6 +3,7 @@ import usersRouter from "./users.mjs"
 import productsRouter from "./products.mjs"
 import cookieRouter from "../cookies/cookie.mjs"
 import authenticationRouter from "./passport_authentication.mjs"
+import discordAuthenticateRouter from "./discord.mjs"
 // import sessionRouter from '../session/session.mjs'
 
 const router = Router();
@@ -21,5 +22,8 @@ router.use(productsRouter);
 
 // Attach authenticationRouter to handle authentcation-related routes
 router.use(authenticationRouter);
+
+// Attach authenticationRouter to handle authentcation-related routes
+router.use(discordAuthenticateRouter);
 
 export default router;
