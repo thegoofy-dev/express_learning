@@ -5,10 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start1":"node --watch --env-file=.env test.js",
+    "start1": "node --watch --env-file=.env test.mjs",
     "start": "node  server.js ",
     "dev": "node --watch --env-file=.env server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [],
   "author": "",
@@ -25,5 +25,14 @@
     "passport": "^0.7.0",
     "passport-discord": "^0.1.4",
     "passport-local": "^1.0.0"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.3",
+    "@types/jest": "^29.5.12",
+    "babel-jest": "^29.7.0",
+    "dotenv": "^16.4.5",
+    "jest": "^29.7.0",
+    "supertest": "^7.0.0"
   }
 }

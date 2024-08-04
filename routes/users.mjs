@@ -4,6 +4,7 @@ import { resolveIndexByUserId} from "../utils/middleWares.mjs";
 import { validationResult, matchedData,checkSchema } from "express-validator";
 import { User } from "../mongoose/schemas/user.mjs" 
 import { hashPassword } from "../utils/helpers.mjs";
+import { getUserByIdHandler } from "../handler/user.mjs";
 
 const router = Router();
 
@@ -42,18 +43,7 @@ router.get('/api/users',
 // GET METHOD FOR PARTICULAR USER DETAIL
 router.get('/api/users/:id',
     checkSchema(idValidationSchema),
-    async (req, res) => {
-        const errors = validationResult(req);
-        if (!errors.isEmpty()) return res.status(400).send({ errors: errors.array() });
-
-        try {
-            const user = await User.findById(req.params.id);
-            if (!user) return res.status(404).send({ message: 'User Not Found' });
-            return res.status(200).send(user);
-        } catch (err) {
-            return res.status(500).send({ message: 'Internal Server Error' });
-        }
-    }
+    getUserByIdHandler
 );
 
 // POST METHOD TECHNIQUE 2
