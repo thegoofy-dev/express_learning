@@ -1,7 +1,7 @@
 import passport from 'passport';
 import { Strategy as LocalStrategy } from 'passport-local';
 import { User } from '../mongoose/schemas/user.mjs';
-import { comparePassword } from '../utils/helpers.mjs';
+import { localStrategyHandler } from '../handler/local-strategy.mjs';
 
 passport.serializeUser((user, done) => {
     console.log('Inside Serialize User');
@@ -25,22 +25,7 @@ passport.deserializeUser(async (id, done) => {
 
 passport.use(new LocalStrategy(
     { usernameField: 'username' }, // Use 'email' if using email as username
-    async (username, password, done) => {
-        console.log(`USERNAME: ${username}`);
-        console.log(`PASSWORD: ${password}`);
-        try {
-            const findUser = await User.findOne({ username });
-            if (!findUser) {
-                return done(null, false, { message: 'User not found' });
-            }
-            if (!comparePassword(password, findUser.password)) {
-                return done(null, false, { message: 'Invalid credentials' });
-            }
-            return done(null, findUser);
-        } catch (err) {
-            return done(err);
-        }
-    }
+    localStrategyHandler
 ));
 
 export default passport;

@@ -1,8 +1,7 @@
-import { matchedData, validationResult } from "express-validator";
+import { validationResult } from "express-validator";
 import { getUserByIdHandler, createUserHandler } from "../handler/user.mjs";
 import { User } from "../mongoose/schemas/user.mjs";
 import validator from "express-validator";
-import passport from "passport";
 import helpers from "../utils/helpers.mjs";
 
 jest.mock("../mongoose/schemas/user.mjs");
