@@ -1,5 +1,6 @@
 import { User } from '../mongoose/schemas/user.mjs';  // Adjust the path to your model
 import { validationResult } from 'express-validator';
+import { hashPassword } from "../utils/helpers.mjs";
 
 
 export const getUserByIdHandler  = async (req, res) => {
@@ -13,4 +14,4 @@ export const getUserByIdHandler  = async (req, res) => {
   } catch (err) {
       return res.status(500).send({ message: 'Internal Server Error' });
   }
-}
+};

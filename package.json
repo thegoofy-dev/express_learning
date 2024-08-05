@@ -29,6 +29,7 @@
   "devDependencies": {
     "@babel/core": "^7.25.2",
     "@babel/preset-env": "^7.25.3",
+    "@jest-mock/express": "^2.1.0",
     "@types/jest": "^29.5.12",
     "babel-jest": "^29.7.0",
     "dotenv": "^16.4.5",
