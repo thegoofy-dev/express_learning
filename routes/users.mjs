@@ -4,7 +4,7 @@ import { resolveIndexByUserId} from "../utils/middleWares.mjs";
 import { validationResult, matchedData,checkSchema } from "express-validator";
 import { User } from "../mongoose/schemas/user.mjs" 
 import { hashPassword } from "../utils/helpers.mjs";
-import { getUserByIdHandler } from "../handler/user.mjs";
+import { createUserHandler, getUserByIdHandler } from "../handler/user.mjs";
 
 const router = Router();
 
@@ -49,23 +49,7 @@ router.get('/api/users/:id',
 // POST METHOD TECHNIQUE 2
 router.post('/api/users',
     checkSchema(createUserValidationSchema),
-    async (req, res) => {
-        const error = validationResult(req);
-        if(!error.isEmpty()) return res.send(error.array());
-        
-        const data = matchedData(req);
-        data.password = hashPassword(data.password);
-        console.log(data);
-        const newUser = new User(data);
-        try {
-            const savedUser = await newUser.save();
-            return res.status(201).send(savedUser);
-        }
-        catch (err) {
-            console.log(err);
-            return res.sendStatus(400);
-        }
-    }
+    createUserHandler
 );
 
 
